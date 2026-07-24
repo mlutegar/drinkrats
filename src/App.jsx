@@ -14,20 +14,20 @@ import Slide09_Ending from './slides/Slide09_Ending';
 import SlideGallery from './slides/SlideGallery';
 import './index.css';
 
-const SLIDE_DURATION = 8000;
+const DEFAULT_DURATION = 8000;
 
 const slides = [
-  Slide00_Intro,
-  Slide01_Origin,
-  Slide02_Total,
-  Slide03_WhoWon,
-  Slide04_BestMonth,
-  Slide05_Streak,
-  Slide06_BestTime,
-  Slide07_Spelling,
-  Slide08_IconicMoments,
-  SlideGallery,
-  Slide09_Ending,
+  { component: Slide00_Intro },
+  { component: Slide01_Origin },
+  { component: Slide02_Total },
+  { component: Slide03_WhoWon },
+  { component: Slide04_BestMonth },
+  { component: Slide05_Streak },
+  { component: Slide06_BestTime },
+  { component: Slide07_Spelling },
+  { component: Slide08_IconicMoments },
+  { component: SlideGallery, duration: 18000 },
+  { component: Slide09_Ending },
 ];
 
 export default function App() {
@@ -55,7 +55,7 @@ export default function App() {
       elapsedRef.current += Date.now() - startTimeRef.current;
       return;
     }
-    const remaining = SLIDE_DURATION - elapsedRef.current;
+    const remaining = (slides[current].duration ?? DEFAULT_DURATION) - elapsedRef.current;
     startTimeRef.current = Date.now();
     timerRef.current = setTimeout(() => {
       elapsedRef.current = 0;
@@ -95,7 +95,7 @@ export default function App() {
     exit: (dir) => ({ x: dir > 0 ? '-60%' : '60%', opacity: 0, scale: 0.95 }),
   };
 
-  const CurrentSlide = slides[current];
+  const { component: CurrentSlide, duration: currentDuration = DEFAULT_DURATION } = slides[current];
 
   return (
     <div
@@ -130,7 +130,7 @@ export default function App() {
             key={current}
             total={slides.length}
             current={current}
-            duration={SLIDE_DURATION}
+            duration={currentDuration}
           />
         </div>
 
