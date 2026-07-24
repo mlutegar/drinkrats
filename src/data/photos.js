@@ -70,5 +70,5 @@ export const photos = [
 export const firstPhoto = photos.find(p => p.first);
 export const lastPhoto = photos.find(p => p.last);
 
-// Helper to get public URL
-export const photoUrl = (file) => `/photos/${file}`;
+// Helper to get public URL — uses Vite BASE_URL so works locally AND no GitHub Pages
+export const photoUrl = (file) => `${import.meta.env.BASE_URL}photos/${file}`;
